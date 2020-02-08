@@ -22,9 +22,12 @@ function stat(strg) {
     seconds += parseInt(array2[i][2], 10);
   }
 
-  console.log(hours + " hours");
-  console.log(minutes + " minutes");
-  console.log(seconds + " seconds");
+  let totalInSeconds = hours * 3600 + minutes * 60 + seconds;
+  let averageInSeconds = parseInt(totalInSeconds / array1.length, 10);
+  let meanSeconds = (averageInSeconds % 3600) % 60;
+  console.log(meanSeconds);
+  console.log(totalInSeconds);
+  console.log(averageInSeconds);
 }
 
 stat("01|15|59, 1|47|16, 01|17|20, 1|32|34, 2|17|17");
