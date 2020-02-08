@@ -6,12 +6,38 @@ function stat(strg) {
   let hours = 0;
   let minutes = 0;
   let seconds = 0;
-  let object = {};
+
   //I think I want to organize all of the hours, minutes, and seconds in one place
   //creating a nested array
   for (let i = 0; i < array1.length; i++) {
     array2.push(array1[i].split("|"));
   }
+  //create an array nest with objects like [{hour: 1; minute: 58; second: 31}, {}]
+  let o = {};
+
+  let hour, minute, second;
+
+  let array3 = array2.forEach(function(a) {
+    let keys = [hour, minute, second];
+    let cur = o;
+
+    keys.forEach(function(k) {
+      if (cur[k] == null) {
+        cur[k] = {};
+      }
+      cur = cur[k];
+    });
+
+    console.log(cur);
+  });
+  console.log(array3);
+  // for (let j = 0; j < array2.length; j++) {
+  //   for (let i = 0; i < keys.length; i++) {
+  //    array3.push({keys[i]: array2[j][i]});
+  //   }
+  // }
+
+  console.log(array3);
   //i can make an array of objects
   //[{hour: 0, minute, seconds: 0}]
   //to get the Mean
@@ -20,7 +46,7 @@ function stat(strg) {
     minutes += parseInt(array2[i][1], 10);
     seconds += parseInt(array2[i][2], 10);
   }
-
+  //parsing the average into hours, minutes, and seconds
   let totalInSeconds = hours * 3600 + minutes * 60 + seconds;
   let averageInSeconds = parseInt(totalInSeconds / array1.length, 10);
   let meanSeconds = (averageInSeconds % 3600) % 60;
