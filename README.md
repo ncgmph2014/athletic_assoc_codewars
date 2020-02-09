@@ -39,3 +39,7 @@ Remarks:
 if a result in seconds is ab.xy... it will be given truncated as ab.
 
 if the given string is "" you will return ""
+
+### Notes
+
+I completed this challenge!!
