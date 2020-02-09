@@ -12,34 +12,8 @@ function stat(strg) {
   for (let i = 0; i < array1.length; i++) {
     array2.push(array1[i].split("|"));
   }
-  //create an array nest with objects like [{hour: 1; minute: 58; second: 31}, {}]
-  let o = {};
+  console.log(array2);
 
-  let hour, minute, second;
-
-  let array3 = array2.forEach(function(a) {
-    let keys = [hour, minute, second];
-    let cur = o;
-
-    keys.forEach(function(k) {
-      if (cur[k] == null) {
-        cur[k] = {};
-      }
-      cur = cur[k];
-    });
-
-    console.log(cur);
-  });
-  console.log(array3);
-  // for (let j = 0; j < array2.length; j++) {
-  //   for (let i = 0; i < keys.length; i++) {
-  //    array3.push({keys[i]: array2[j][i]});
-  //   }
-  // }
-
-  console.log(array3);
-  //i can make an array of objects
-  //[{hour: 0, minute, seconds: 0}]
   //to get the Mean
   for (let i = 0; i < array2.length; i++) {
     hours += parseInt(array2[i][0], 10);
@@ -54,23 +28,36 @@ function stat(strg) {
   let meanMinutes = meanMinutesBefore % 60;
 
   let meanHours = (meanMinutesBefore - meanMinutes) / 60;
-  console.log(meanHours);
-
-  console.log(meanMinutes);
-  //   let numberOf3600s = parseInt((averageInSeconds - meanSeconds) / 3600, 10);
-  //   let meanMinutes =
-  console.log(meanSeconds);
 
   let average = "Average: " + meanHours + "|" + meanMinutes + "|" + meanSeconds;
   console.log(average);
 
+  //add everything together in a new array so that we can arrange it for the to find the range and the median
+  //maybe we can sort the new array and the old array to get our answers?
+  let totalSecondsArray = array2.map(
+    x =>
+      parseInt(x[0], 10) * 3600 + parseInt(x[1], 10) * 60 + parseInt(x[2], 10)
+  );
+
+  console.log(totalSecondsArray);
+
+  let sortSecondsArray = totalSecondsArray.concat().sort((a, b) => a - b);
+  console.log(sortSecondsArray);
+
   //didn't work because I have to sort everything first
+  let medianRaw = 0;
   let median = 0;
   if (array1.length % 2 !== 0) {
-    median = array1[Math.round(array1.length / 2)];
+    medianRaw = sortSecondsArray[Math.round(array1.length / 2) - 1];
+  } else if (array11.length % 2 === 0) {
+    medianRaw =
+      sortSecondsArray[array1.length / 2] +
+      sortSecondsArray[array1.length / 2 - 1];
   }
-
-  console.log(median);
+  let rangeRaw =
+    sortSecondsArray[sortSecondsArray.length - 1] - sortSecondsArray[0];
+  console.log(rangeRaw);
+  console.log(medianRaw);
 }
 
 stat("01|15|59, 1|47|16, 01|17|20, 1|32|34, 2|17|17");
