@@ -28,7 +28,15 @@ function stat(strg) {
   let meanMinutes = meanMinutesBefore % 60;
 
   let meanHours = (meanMinutesBefore - meanMinutes) / 60;
-
+  if (meanHours < 10) {
+    meanHours = "0" + meanHours;
+  }
+  if (meanMinutes < 10) {
+    meanMinutes = "0" + meanMinutes;
+  }
+  if (meanSeconds < 10) {
+    meanSeconds = "0" + meanSeconds;
+  }
   let average = "Average: " + meanHours + "|" + meanMinutes + "|" + meanSeconds;
   console.log(average);
 
@@ -39,19 +47,21 @@ function stat(strg) {
       parseInt(x[0], 10) * 3600 + parseInt(x[1], 10) * 60 + parseInt(x[2], 10)
   );
 
-  console.log(totalSecondsArray);
+  // console.log(totalSecondsArray);
 
   let sortSecondsArray = totalSecondsArray.concat().sort((a, b) => a - b);
-  console.log(sortSecondsArray);
+  // console.log(sortSecondsArray);
 
   //didn't work because I have to sort everything first
   let medianRaw = 0;
   if (array1.length % 2 !== 0) {
     medianRaw = sortSecondsArray[Math.round(array1.length / 2) - 1];
-  } else if (array11.length % 2 === 0) {
-    medianRaw =
-      sortSecondsArray[array1.length / 2] +
-      sortSecondsArray[array1.length / 2 - 1];
+  } else if (array1.length % 2 === 0) {
+    medianRaw = Math.floor(
+      (sortSecondsArray[array1.length / 2] +
+        sortSecondsArray[array1.length / 2 - 1]) /
+        2
+    );
   }
   let rangeRaw =
     sortSecondsArray[sortSecondsArray.length - 1] - sortSecondsArray[0];
@@ -60,7 +70,15 @@ function stat(strg) {
   let medianMinutesBefore = (medianRaw - medianSeconds) / 60;
   let medianMinutes = medianMinutesBefore % 60;
   let medianHour = (medianMinutesBefore - medianMinutes) / 60;
-
+  if (medianHour < 10) {
+    medianHour = "0" + medianHour;
+  }
+  if (medianMinutes < 10) {
+    medianMinutes = "0" + medianMinutes;
+  }
+  if (medianSeconds < 10) {
+    medianSeconds = "0" + medianSeconds;
+  }
   //median altogether
   let median =
     "Median: " + medianHour + "|" + medianMinutes + "|" + medianSeconds;
@@ -76,11 +94,31 @@ function stat(strg) {
   } else if (rangeMinutesBefore < 60) {
     rangeMinutes = rangeMinutesBefore;
   }
+
+  if (rangeHour < 10) {
+    rangeHour = "0" + rangeHour;
+  }
+  if (rangeMinutes < 10) {
+    rangeMinutes = "0" + rangeMinutes;
+  }
+  if (rangeSeconds < 10) {
+    rangeSeconds = "0" + rangeSeconds;
+  }
   let range = "Range: " + rangeHour + "|" + rangeMinutes + "|" + rangeSeconds;
   console.log(range);
+  let result = range + " " + average + " " + median;
+
+  return result;
 }
 
-stat("01|15|59, 1|47|16, 01|17|20, 1|32|34, 2|17|17");
-//"Range: 01|01|18 Average: 01|38|05 Median: 01|32|34")
-stat("02|15|59, 2|47|16, 02|17|20, 2|32|34, 2|17|17, 2|22|00, 2|31|41");
-//"Range: 00|31|17 Average: 02|26|18 Median: 02|22|00"
+// console.log(stat("01|15|59, 1|47|16, 01|17|20, 1|32|34, 2|17|17"));
+// //"Range: 01|01|18 Average: 01|38|05 Median: 01|32|34")
+// console.log(
+//   stat("02|15|59, 2|47|16, 02|17|20, 2|32|34, 2|17|17, 2|22|00, 2|31|41")
+// );
+// //"Range: 00|31|17 Average: 02|26|18 Median: 02|22|00"
+// console.log(
+//   stat(
+//     "01|15|59, 02|15|59, 2|47|16, 02|17|20, 2|32|34, 2|17|17, 2|22|00, 2|31|41"
+//   )
+// );
