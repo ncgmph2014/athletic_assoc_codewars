@@ -46,7 +46,6 @@ function stat(strg) {
 
   //didn't work because I have to sort everything first
   let medianRaw = 0;
-  let median = 0;
   if (array1.length % 2 !== 0) {
     medianRaw = sortSecondsArray[Math.round(array1.length / 2) - 1];
   } else if (array11.length % 2 === 0) {
@@ -56,8 +55,29 @@ function stat(strg) {
   }
   let rangeRaw =
     sortSecondsArray[sortSecondsArray.length - 1] - sortSecondsArray[0];
-  console.log(rangeRaw);
-  console.log(medianRaw);
+
+  let medianSeconds = (medianRaw % 3600) % 60;
+  let medianMinutesBefore = (medianRaw - medianSeconds) / 60;
+  let medianMinutes = medianMinutesBefore % 60;
+  let medianHour = (medianMinutesBefore - medianMinutes) / 60;
+
+  //median altogether
+  let median =
+    "Median: " + medianHour + "|" + medianMinutes + "|" + medianSeconds;
+  console.log(median);
+
+  let rangeSeconds = (rangeRaw % 3600) % 60;
+  let rangeMinutesBefore = (rangeRaw - rangeSeconds) / 60;
+  let rangeMinutes = 0;
+  let rangeHour = 0;
+  if (rangeMinutesBefore >= 60) {
+    rangeMinutes = rangeMinutesBefore % 60;
+    rangeHour = (rangeMinutesBefore - rangeMinutes) / 60;
+  } else if (rangeMinutesBefore < 60) {
+    rangeMinutes = rangeMinutesBefore;
+  }
+  let range = "Range: " + rangeHour + "|" + rangeMinutes + "|" + rangeSeconds;
+  console.log(range);
 }
 
 stat("01|15|59, 1|47|16, 01|17|20, 1|32|34, 2|17|17");
